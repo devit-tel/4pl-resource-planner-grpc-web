@@ -1,0 +1,133 @@
+syntax = "proto3";
+package coordinator;
+option go_package = ".;coordinator";
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/empty.proto";
+
+
+service Coordinator {
+  rpc SetScoutRule(Rule) returns (google.protobuf.Empty) {}
+  rpc ListScoutRule(google.protobuf.Empty) returns (stream Rule) {}
+  rpc DeleteScoutRule(Rule) returns (google.protobuf.Empty) {}
+
+  // Search for candidates that matched the given criteria
+  rpc Scout(Rule) returns (Candidates) {}
+
+  rpc ScoutThenOptimize(OptimizeRule) returns (IntList) {}
+}
+
+message Rule {
+  // Input can be any arbitrary JSON
+  google.protobuf.Struct input = 1;
+  // About script https://pkg.go.dev/github.com/robertkrimen/otto#pkg-overview
+  string script = 2;
+
+  string name = 3;
+}
+
+enum MatrixType {
+  DISTANCE = 0;
+  DURATION = 1;
+}
+
+message OptimizeRule {
+  google.protobuf.Struct input = 1;
+
+  string getVehiclesScript = 2;
+  string getCustomersScript = 3;
+
+  string getVehiclesLatLngsScript = 4;
+  string getCustomersLatLngsScript = 5;
+
+  string getVehiclesIdScript = 6;
+  string getCustomersIdScript = 7;
+
+  MatrixType matrixType = 8;
+
+  repeated GetConstraint getConstraintArray = 9;
+
+  int64  MaxProcessTime = 10;
+}
+
+message GetConstraint {
+  string name = 1;
+  bool addToResult = 2;
+  oneof constraint {
+    GetCapacityConstraint capacityConstraint = 3;
+    GetRangeConstraint rangeConstraint = 4;
+    GetDependentConstraint dependentConstraint = 5;
+    GetDiscriminationConstraint discriminationConstraint = 6;
+  }
+}
+
+// E.g. max load, range limit, max drop
+message GetCapacityConstraint {
+  // Matrix of transit cost
+  // (2d array)
+  string transitCostMatrix = 1;
+  // List of capacity
+  // (1d array)
+  string capacities = 2;
+}
+
+// E.g. time windows
+message GetRangeConstraint {
+  // Matrix of capacity
+  // (2d array)
+  string transitCostMatrix = 1;
+  // List of pairs
+  // (2d array)
+  string pairsList = 2;
+}
+
+// E.g. pickup then delivery
+message GetDependentConstraint {
+  // List of dependent
+  // e.g. dependent[0] = [1, 2, 3]
+  // mean dependent[0] have to start after dependent[1], dependent[2], and dependent[3]
+  // and they all must on the same route
+  // 2d array
+  string dependents = 1;
+}
+
+// E.g. vehicle type, cluster, group
+message GetDiscriminationConstraint {
+  // List of classes
+  // e.g.
+  // classes[0] = [0]
+  // classes[1] = [0, 1, 2]
+  // classes[2] = [1, 2]
+  // classes[3] = [0, 2]
+  // classes[4] = [3]
+  // mean
+  // classes[0] can be on the same route with classes[1], classes[3]
+  // classes[1] can be on the same route with classes[0], classes[2], classes[3]
+  // classes[2] can be on the same route with classes[1], classes[3]
+  // classes[3] can be on the same route with classes[0], classes[2]
+  // classes[3] can not on the same route with others
+  // 2d array
+  string classes = 1;
+}
+
+message RoutingArguments {
+  // len(matrix) must equal (len(vehicleIDs) + len(consumerIDs))
+  Int2dList matrix = 1;
+  repeated string vehicleIDs = 2;
+  repeated string consumerIDs = 3;
+
+  repeated IntList ConstraintResourceArray = 4;
+  repeated Int2dList ConstraintResource2dArray = 5;
+}
+
+message IntList {
+  repeated int64 values = 1 [packed = true];
+}
+
+message Int2dList {
+  repeated IntList values = 1;
+}
+
+message Candidates {
+  repeated google.protobuf.Struct result = 1;
+}
