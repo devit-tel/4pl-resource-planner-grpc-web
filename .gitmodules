@@ -1,3 +1,0 @@
-[submodule "protoc-gen-twirp_typescript"]
-	path = protoc-gen-twirp_typescript
-	url = https://github.com/larrymyers/protoc-gen-twirp_typescript

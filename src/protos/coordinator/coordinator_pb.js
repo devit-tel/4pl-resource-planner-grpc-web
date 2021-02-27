@@ -14,11 +14,9 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
-goog.object.extend(proto, google_protobuf_struct_pb);
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 goog.object.extend(proto, google_protobuf_empty_pb);
-goog.exportSymbol('proto.coordinator.Candidates', null, global);
+goog.exportSymbol('proto.coordinator.ExecResult', null, global);
 goog.exportSymbol('proto.coordinator.GetCapacityConstraint', null, global);
 goog.exportSymbol('proto.coordinator.GetConstraint', null, global);
 goog.exportSymbol('proto.coordinator.GetConstraint.ConstraintCase', null, global);
@@ -251,16 +249,16 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.coordinator.Candidates = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.coordinator.Candidates.repeatedFields_, null);
+proto.coordinator.ExecResult = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.coordinator.Candidates, jspb.Message);
+goog.inherits(proto.coordinator.ExecResult, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   /**
    * @public
    * @override
    */
-  proto.coordinator.Candidates.displayName = 'proto.coordinator.Candidates';
+  proto.coordinator.ExecResult.displayName = 'proto.coordinator.ExecResult';
 }
 
 
@@ -294,7 +292,7 @@ proto.coordinator.Rule.prototype.toObject = function(opt_includeInstance) {
  */
 proto.coordinator.Rule.toObject = function(includeInstance, msg) {
   var f, obj = {
-    input: (f = msg.getInput()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
+    input: jspb.Message.getFieldWithDefault(msg, 1, ""),
     script: jspb.Message.getFieldWithDefault(msg, 2, ""),
     name: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
@@ -334,8 +332,7 @@ proto.coordinator.Rule.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new google_protobuf_struct_pb.Struct;
-      reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
+      var value = /** @type {string} */ (reader.readString());
       msg.setInput(value);
       break;
     case 2:
@@ -376,11 +373,10 @@ proto.coordinator.Rule.prototype.serializeBinary = function() {
 proto.coordinator.Rule.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getInput();
-  if (f != null) {
-    writer.writeMessage(
+  if (f.length > 0) {
+    writer.writeString(
       1,
-      f,
-      google_protobuf_struct_pb.Struct.serializeBinaryToWriter
+      f
     );
   }
   f = message.getScript();
@@ -401,39 +397,20 @@ proto.coordinator.Rule.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional google.protobuf.Struct input = 1;
- * @return {?proto.google.protobuf.Struct}
+ * optional string input = 1;
+ * @return {string}
  */
 proto.coordinator.Rule.prototype.getInput = function() {
-  return /** @type{?proto.google.protobuf.Struct} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 1));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {?proto.google.protobuf.Struct|undefined} value
+ * @param {string} value
  * @return {!proto.coordinator.Rule} returns this
-*/
+ */
 proto.coordinator.Rule.prototype.setInput = function(value) {
-  return jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-/**
- * Clears the message field making it undefined.
- * @return {!proto.coordinator.Rule} returns this
- */
-proto.coordinator.Rule.prototype.clearInput = function() {
-  return this.setInput(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.coordinator.Rule.prototype.hasInput = function() {
-  return jspb.Message.getField(this, 1) != null;
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -512,7 +489,7 @@ proto.coordinator.OptimizeRule.prototype.toObject = function(opt_includeInstance
  */
 proto.coordinator.OptimizeRule.toObject = function(includeInstance, msg) {
   var f, obj = {
-    input: (f = msg.getInput()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
+    input: jspb.Message.getFieldWithDefault(msg, 1, ""),
     getvehiclesscript: jspb.Message.getFieldWithDefault(msg, 2, ""),
     getcustomersscript: jspb.Message.getFieldWithDefault(msg, 3, ""),
     getvehicleslatlngsscript: jspb.Message.getFieldWithDefault(msg, 4, ""),
@@ -560,8 +537,7 @@ proto.coordinator.OptimizeRule.deserializeBinaryFromReader = function(msg, reade
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new google_protobuf_struct_pb.Struct;
-      reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
+      var value = /** @type {string} */ (reader.readString());
       msg.setInput(value);
       break;
     case 2:
@@ -631,11 +607,10 @@ proto.coordinator.OptimizeRule.prototype.serializeBinary = function() {
 proto.coordinator.OptimizeRule.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getInput();
-  if (f != null) {
-    writer.writeMessage(
+  if (f.length > 0) {
+    writer.writeString(
       1,
-      f,
-      google_protobuf_struct_pb.Struct.serializeBinaryToWriter
+      f
     );
   }
   f = message.getGetvehiclesscript();
@@ -706,39 +681,20 @@ proto.coordinator.OptimizeRule.serializeBinaryToWriter = function(message, write
 
 
 /**
- * optional google.protobuf.Struct input = 1;
- * @return {?proto.google.protobuf.Struct}
+ * optional string input = 1;
+ * @return {string}
  */
 proto.coordinator.OptimizeRule.prototype.getInput = function() {
-  return /** @type{?proto.google.protobuf.Struct} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 1));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {?proto.google.protobuf.Struct|undefined} value
+ * @param {string} value
  * @return {!proto.coordinator.OptimizeRule} returns this
-*/
+ */
 proto.coordinator.OptimizeRule.prototype.setInput = function(value) {
-  return jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-/**
- * Clears the message field making it undefined.
- * @return {!proto.coordinator.OptimizeRule} returns this
- */
-proto.coordinator.OptimizeRule.prototype.clearInput = function() {
-  return this.setInput(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.coordinator.OptimizeRule.prototype.hasInput = function() {
-  return jspb.Message.getField(this, 1) != null;
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -2577,13 +2533,6 @@ proto.coordinator.Int2dList.prototype.clearValuesList = function() {
 
 
 
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.coordinator.Candidates.repeatedFields_ = [1];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -2599,8 +2548,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.coordinator.Candidates.prototype.toObject = function(opt_includeInstance) {
-  return proto.coordinator.Candidates.toObject(opt_includeInstance, this);
+proto.coordinator.ExecResult.prototype.toObject = function(opt_includeInstance) {
+  return proto.coordinator.ExecResult.toObject(opt_includeInstance, this);
 };
 
 
@@ -2609,14 +2558,14 @@ proto.coordinator.Candidates.prototype.toObject = function(opt_includeInstance) 
  * @param {boolean|undefined} includeInstance Deprecated. Whether to include
  *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.coordinator.Candidates} msg The msg instance to transform.
+ * @param {!proto.coordinator.ExecResult} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.coordinator.Candidates.toObject = function(includeInstance, msg) {
+proto.coordinator.ExecResult.toObject = function(includeInstance, msg) {
   var f, obj = {
-    resultList: jspb.Message.toObjectList(msg.getResultList(),
-    google_protobuf_struct_pb.Struct.toObject, includeInstance)
+    result: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    logs: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -2630,23 +2579,23 @@ proto.coordinator.Candidates.toObject = function(includeInstance, msg) {
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.coordinator.Candidates}
+ * @return {!proto.coordinator.ExecResult}
  */
-proto.coordinator.Candidates.deserializeBinary = function(bytes) {
+proto.coordinator.ExecResult.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.coordinator.Candidates;
-  return proto.coordinator.Candidates.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.coordinator.ExecResult;
+  return proto.coordinator.ExecResult.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.coordinator.Candidates} msg The message object to deserialize into.
+ * @param {!proto.coordinator.ExecResult} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.coordinator.Candidates}
+ * @return {!proto.coordinator.ExecResult}
  */
-proto.coordinator.Candidates.deserializeBinaryFromReader = function(msg, reader) {
+proto.coordinator.ExecResult.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -2654,9 +2603,12 @@ proto.coordinator.Candidates.deserializeBinaryFromReader = function(msg, reader)
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new google_protobuf_struct_pb.Struct;
-      reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
-      msg.addResult(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setResult(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLogs(value);
       break;
     default:
       reader.skipField();
@@ -2671,9 +2623,9 @@ proto.coordinator.Candidates.deserializeBinaryFromReader = function(msg, reader)
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.coordinator.Candidates.prototype.serializeBinary = function() {
+proto.coordinator.ExecResult.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.coordinator.Candidates.serializeBinaryToWriter(this, writer);
+  proto.coordinator.ExecResult.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -2681,58 +2633,62 @@ proto.coordinator.Candidates.prototype.serializeBinary = function() {
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.coordinator.Candidates} message
+ * @param {!proto.coordinator.ExecResult} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.coordinator.Candidates.serializeBinaryToWriter = function(message, writer) {
+proto.coordinator.ExecResult.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getResultList();
+  f = message.getResult();
   if (f.length > 0) {
-    writer.writeRepeatedMessage(
+    writer.writeString(
       1,
-      f,
-      google_protobuf_struct_pb.Struct.serializeBinaryToWriter
+      f
+    );
+  }
+  f = message.getLogs();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
     );
   }
 };
 
 
 /**
- * repeated google.protobuf.Struct result = 1;
- * @return {!Array<!proto.google.protobuf.Struct>}
+ * optional string result = 1;
+ * @return {string}
  */
-proto.coordinator.Candidates.prototype.getResultList = function() {
-  return /** @type{!Array<!proto.google.protobuf.Struct>} */ (
-    jspb.Message.getRepeatedWrapperField(this, google_protobuf_struct_pb.Struct, 1));
+proto.coordinator.ExecResult.prototype.getResult = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {!Array<!proto.google.protobuf.Struct>} value
- * @return {!proto.coordinator.Candidates} returns this
-*/
-proto.coordinator.Candidates.prototype.setResultList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 1, value);
+ * @param {string} value
+ * @return {!proto.coordinator.ExecResult} returns this
+ */
+proto.coordinator.ExecResult.prototype.setResult = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * @param {!proto.google.protobuf.Struct=} opt_value
- * @param {number=} opt_index
- * @return {!proto.google.protobuf.Struct}
+ * optional string logs = 2;
+ * @return {string}
  */
-proto.coordinator.Candidates.prototype.addResult = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.google.protobuf.Struct, opt_index);
+proto.coordinator.ExecResult.prototype.getLogs = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /**
- * Clears the list making it empty but non-null.
- * @return {!proto.coordinator.Candidates} returns this
+ * @param {string} value
+ * @return {!proto.coordinator.ExecResult} returns this
  */
-proto.coordinator.Candidates.prototype.clearResultList = function() {
-  return this.setResultList([]);
+proto.coordinator.ExecResult.prototype.setLogs = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

@@ -2,14 +2,11 @@
 // file: protos/coordinator/coordinator.proto
 
 import * as jspb from "google-protobuf";
-import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
 
 export class Rule extends jspb.Message {
-  hasInput(): boolean;
-  clearInput(): void;
-  getInput(): google_protobuf_struct_pb.Struct | undefined;
-  setInput(value?: google_protobuf_struct_pb.Struct): void;
+  getInput(): string;
+  setInput(value: string): void;
 
   getScript(): string;
   setScript(value: string): void;
@@ -29,17 +26,15 @@ export class Rule extends jspb.Message {
 
 export namespace Rule {
   export type AsObject = {
-    input?: google_protobuf_struct_pb.Struct.AsObject,
+    input: string,
     script: string,
     name: string,
   }
 }
 
 export class OptimizeRule extends jspb.Message {
-  hasInput(): boolean;
-  clearInput(): void;
-  getInput(): google_protobuf_struct_pb.Struct | undefined;
-  setInput(value?: google_protobuf_struct_pb.Struct): void;
+  getInput(): string;
+  setInput(value: string): void;
 
   getGetvehiclesscript(): string;
   setGetvehiclesscript(value: string): void;
@@ -82,7 +77,7 @@ export class OptimizeRule extends jspb.Message {
 
 export namespace OptimizeRule {
   export type AsObject = {
-    input?: google_protobuf_struct_pb.Struct.AsObject,
+    input: string,
     getvehiclesscript: string,
     getcustomersscript: string,
     getvehicleslatlngsscript: string,
@@ -330,25 +325,27 @@ export namespace Int2dList {
   }
 }
 
-export class Candidates extends jspb.Message {
-  clearResultList(): void;
-  getResultList(): Array<google_protobuf_struct_pb.Struct>;
-  setResultList(value: Array<google_protobuf_struct_pb.Struct>): void;
-  addResult(value?: google_protobuf_struct_pb.Struct, index?: number): google_protobuf_struct_pb.Struct;
+export class ExecResult extends jspb.Message {
+  getResult(): string;
+  setResult(value: string): void;
+
+  getLogs(): string;
+  setLogs(value: string): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): Candidates.AsObject;
-  static toObject(includeInstance: boolean, msg: Candidates): Candidates.AsObject;
+  toObject(includeInstance?: boolean): ExecResult.AsObject;
+  static toObject(includeInstance: boolean, msg: ExecResult): ExecResult.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: Candidates, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): Candidates;
-  static deserializeBinaryFromReader(message: Candidates, reader: jspb.BinaryReader): Candidates;
+  static serializeBinaryToWriter(message: ExecResult, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ExecResult;
+  static deserializeBinaryFromReader(message: ExecResult, reader: jspb.BinaryReader): ExecResult;
 }
 
-export namespace Candidates {
+export namespace ExecResult {
   export type AsObject = {
-    resultList: Array<google_protobuf_struct_pb.Struct.AsObject>,
+    result: string,
+    logs: string,
   }
 }
 

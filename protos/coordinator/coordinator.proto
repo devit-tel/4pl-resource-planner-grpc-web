@@ -2,24 +2,23 @@ syntax = "proto3";
 package coordinator;
 option go_package = ".;coordinator";
 
-import "google/protobuf/struct.proto";
 import "google/protobuf/empty.proto";
 
 
 service Coordinator {
-  rpc SetScoutRule(Rule) returns (google.protobuf.Empty) {}
-  rpc ListScoutRule(google.protobuf.Empty) returns (stream Rule) {}
-  rpc DeleteScoutRule(Rule) returns (google.protobuf.Empty) {}
+  rpc SetExecRule(Rule) returns (google.protobuf.Empty) {}
+  rpc ListExecRule(google.protobuf.Empty) returns (stream Rule) {}
+  rpc DeleteExecRule(Rule) returns (google.protobuf.Empty) {}
 
   // Search for candidates that matched the given criteria
-  rpc Scout(Rule) returns (Candidates) {}
+  rpc Exec(Rule) returns (ExecResult) {}
 
   rpc ScoutThenOptimize(OptimizeRule) returns (IntList) {}
 }
 
 message Rule {
   // Input can be any arbitrary JSON
-  google.protobuf.Struct input = 1;
+  string input = 1;
   // About script https://pkg.go.dev/github.com/robertkrimen/otto#pkg-overview
   string script = 2;
 
@@ -32,7 +31,7 @@ enum MatrixType {
 }
 
 message OptimizeRule {
-  google.protobuf.Struct input = 1;
+  string input = 1;
 
   string getVehiclesScript = 2;
   string getCustomersScript = 3;
@@ -128,6 +127,7 @@ message Int2dList {
   repeated IntList values = 1;
 }
 
-message Candidates {
-  repeated google.protobuf.Struct result = 1;
+message ExecResult {
+  string result = 1;
+  string logs = 2;
 }
