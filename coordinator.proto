@@ -7,7 +7,8 @@ import "google/protobuf/empty.proto";
 
 service Coordinator {
   rpc SetExecRule(Rule) returns (google.protobuf.Empty) {}
-  rpc ListExecRule(google.protobuf.Empty) returns (stream Rule) {}
+  rpc GetExecRuleByName(Rule) returns (Rule) {}
+  rpc ListExecRule(google.protobuf.Empty) returns (RulesList) {}
   rpc DeleteExecRule(Rule) returns (google.protobuf.Empty) {}
 
   // Search for candidates that matched the given criteria
@@ -130,4 +131,8 @@ message Int2dList {
 message ExecResult {
   string result = 1;
   string logs = 2;
+}
+
+message RulesList {
+  repeated Rule rules = 1;
 }
